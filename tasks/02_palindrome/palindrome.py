@@ -13,17 +13,12 @@ Examples:
     False
 """
 
-import re;
-import math;
+import re
 
 
 def is_palindrome(text: str) -> bool:
-    clean = re.sub(r"[^\w\d]", "", text.lower())
-    for i in range(math.floor(len(clean)/2)):
-        if clean[i] != clean[-(i+1)]:
-            return False
-    return True
-
+    clean = re.sub(r"[\W_]", "", text.lower())
+    return clean == clean[::-1]
 
 
 if __name__ == "__main__":

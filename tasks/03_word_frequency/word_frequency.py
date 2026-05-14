@@ -16,19 +16,16 @@ Example:
     [('a', 3), ('b', 3)]
 """
 
-import re;
-import itertools;
+import re
+from collections import Counter
 
 
 def count_words(text: str) -> dict[str, int]:
-    clean = re.sub(r"[^\s\w\d]", "", text.lower()).split()
-    clean.sort()
-    return {k: sum(1 for _ in group) for k, group in itertools.groupby(clean)}
+    return dict(Counter(re.findall(r"\w+", text.lower())))
+
 
 def top_n(counts: dict[str, int], n: int) -> list[tuple[str, int]]:
-    sorted = list(counts.items())
-    sorted.sort(key = lambda kv: (-kv[1],kv[0]))
-    return sorted[:n]
+    return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:n]
 
 
 if __name__ == "__main__":

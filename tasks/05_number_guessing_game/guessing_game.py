@@ -26,47 +26,45 @@ Examples:
 
 from __future__ import annotations
 
+import random
 from typing import Iterable
 
 
 def evaluate_guess(guess: int, target: int) -> str:
-    match guess:
-        case correct if guess == target:
-            return "correct"
-        case low if guess < target:
-            return "low"
-        case high:
-            return "high"
+    if guess == target:
+        return "correct"
+    if guess < target:
+        return "low"
+    return "high"
 
 
 def play(target: int, guesses: Iterable[int]) -> int | None:
-    for i, guess in enumerate(guesses):
-        if (target == guess):
-            return i + 1
+    for i, guess in enumerate(guesses, start=1):
+        if evaluate_guess(guess, target) == "correct":
+            return i
     return None
 
+
 def prompt() -> int:
-    while(True):
-        guess = input("Guess a number from 1 to 100: ")
-        match guess:
-            case numeric if guess.lstrip("-").isnumeric():
-                match int(numeric):
-                    case correct if 0 <= correct <= 100:
-                        return correct
-                    case outside_range:
-                        print("That wasn't between 1 and 100")
-            case wrong:
-                print("That wasn't a number.")
+    while True:
+        raw = input("Guess a number from 1 to 100: ").strip()
+        try:
+            value = int(raw)
+        except ValueError:
+            print("That wasn't a number.")
+            continue
+        if 1 <= value <= 100:
+            return value
+        print("That wasn't between 1 and 100")
+
 
 def main() -> None:
-    import random
     target = random.randint(1, 100)
-    feedback = ""
-    while(feedback != "correct"):
-        guess = prompt()
-        feedback = evaluate_guess(guess, target)
+    while True:
+        feedback = evaluate_guess(prompt(), target)
         print(feedback)
-
+        if feedback == "correct":
+            return
 
 
 if __name__ == "__main__":
