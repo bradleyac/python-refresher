@@ -12,9 +12,19 @@ Example:
     ['1', '2', 'Fizz', '4', 'Buzz']
 """
 
+def fizzbuzzStr(n: int) -> str:
+    match n:
+        case fb if n % 15 == 0:
+            return "FizzBuzz";
+        case f if n % 3 == 0:
+            return "Fizz";
+        case b if n % 5 == 0:
+            return "Buzz";
+        case other:
+            return str(other);
 
 def fizzbuzz(n: int) -> list[str]:
-    raise NotImplementedError
+    return [fizzbuzzStr(i + 1) for i in range(n)]
 
 
 if __name__ == "__main__":

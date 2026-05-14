@@ -16,17 +16,16 @@ Examples:
     0.0
 """
 
-
 def celsius_to_fahrenheit(c: float) -> float:
-    raise NotImplementedError
+    return round(c * 1.8 + 32, 2)
 
 
 def fahrenheit_to_celsius(f: float) -> float:
-    raise NotImplementedError
+    return round((f - 32) / 1.8, 2)
 
 
 def celsius_to_kelvin(c: float) -> float:
-    raise NotImplementedError
+    return round(c + 273.15, 2)
 
 
 if __name__ == "__main__":
